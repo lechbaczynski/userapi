@@ -19,6 +19,7 @@ Then copy .env.example to .env and .env.testing
 Make sure .env has right database file set, example:
 
 DB_CONNECTION=sqlite
+
 DB_DATABASE=/home/vagrant/userapi/database/database.sqlite
 
 in .env.testing change it to:
