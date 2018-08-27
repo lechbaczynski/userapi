@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Subscriber;
+use App\Field;
 use App\EmailValidator as EmailValidator;
 
 class SubscriberController extends Controller
@@ -42,7 +43,6 @@ class SubscriberController extends Controller
 
         // check if not reactivating existing user
         $checkSubscribers = Subscriber::where('email', $email)->get(); 
-        // dd($checkSubscribers->count());
         if ($checkSubscribers->count()) {
             // already exists
             $httpStatus = 409;
@@ -56,29 +56,46 @@ class SubscriberController extends Controller
             return response()->json($returnData, $httpStatus);
         }
 
+        $fields = $request->input('fields');
+        
+        // check for fields
+        if ($fields && is_array($fields)) {
+            // check fields
+            foreach ($fields as $field) {
+            
+                // check if field has a type
+                // and name
+                if (!(
+                    ($field['title'])
+                    &&
+                    (in_array($field['type'], Field::$allowedTypes) )
+                    
+                    ) ) {
+                        $httpStatus = 422;
+                        $returnData = array(
+                        'errors' => [
+                            ['status' => $httpStatus,
+                            'Title'  => 'Wrong fields',
+                            'detail' => 'Error in fields']],
+                        );
+               
+                        return response()->json($returnData, $httpStatus);
+                
+                }
+            }
+            
+        }
+        
         
         $subscriber = new Subscriber;
         $subscriber->email = $email;
         $subscriber->name = $request->input('name');
-        
-        
-        // check for fields
-        if ($request->input('fields') && is_array($request->input('fields'))) {
-            // add fields
-            
-            $fields = $request->input('fields');
-            foreach ($fields as $field) {
-                
-                
-            }
-        }
-        
         // set account_id
         // set it to 1 now, maybe use it in next version
         $subscriber->account_id = 1;
         $subscriber->state = 'unconfirmed';
         $saved = $subscriber->save();
-        
+
         if (!$saved) {
             $httpStatus = 500;
             $returnData = array(
@@ -90,7 +107,14 @@ class SubscriberController extends Controller
                
             return response()->json($returnData, $httpStatus);  
         }
-         
+
+        // add fields
+        if ($fields && is_array($fields)) {
+            foreach ($fields as $field) {
+                $field = $subscriber->fields()->create($field);
+            }
+        }
+       
         $httpStatus = 201;
         $returnData = array(
             'created' => true,

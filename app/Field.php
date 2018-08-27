@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Field extends Model
 {
-    //
+    protected $fillable = ['type', 'title', 'value'];
+    public static $allowedTypes = ['number','string']; // TODO
 }

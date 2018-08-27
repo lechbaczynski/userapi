@@ -96,7 +96,7 @@ class AddingSubscriberTest extends TestCase
                 ['name' => 'John',
                  'email' => "example@gmail.com",
                   'fields' => [
-                      ['name' => 'source', 'type' => 'string', 'value' => 'website'],
+                      ['title' => 'source', 'type' => 'string', 'value' => 'website'],
                     ]]);
 
         $response
@@ -114,8 +114,9 @@ class AddingSubscriberTest extends TestCase
                 ['name' => 'John',
                  'email' => "example@gmail.com",
                   'fields' => [
-                     ['name' => 'source', 'type'=> 'string', 'value' => 'website'],
-                     ['name' => 'age', 'type' => 'number', 'value' => 20],
+                     ['title' => 'source', 'type'=> 'string', 'value' => 'website'],
+                     ['title' => 'age', 'type' => 'number', 'value' => 20],
+                     ['title' => 'sex', 'type' => 'string'], // empty value
                     ]]);
 
         $response
