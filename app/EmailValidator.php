@@ -24,12 +24,14 @@ class EmailValidator
         $validator = EmailValidation\EmailValidatorFactory::create($email);
         $arrayResult = $validator->getValidationResults()->asArray();
         
-        
-        if ($arrayResult['valid_format'] && 
-                $arrayResult['valid_host'] && 
-                $arrayResult['valid_mx_records'] ) {
+            if ($arrayResult['valid_format'] 
+                && $arrayResult['valid_host'] 
+                // commenting it out, as it returns false negatives for gmail
+                // and not allowing gmail users to register would be bad
+                // && $arrayResult['valid_mx_records'] 
+                    ) {
             return true;
-        };
+        }
         return false;
         
         

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+Use App\Subscriber;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('subscribers', 'SubscriberController@index');
+Route::get('subscribers/{id}', 'SubscriberController@show');
+Route::post('subscribers', 'SubscriberController@store');
+Route::put('subscribers/{id}', 'SubscriberController@update');
+Route::delete('subscribers/{id}', 'SubscriberController@delete');
+
+
+

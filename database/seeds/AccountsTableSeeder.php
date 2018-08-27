@@ -15,7 +15,7 @@ class AccountsTableSeeder extends Seeder
         $accounts = ['First Account', 'Another Account'];
         foreach ($accounts as $accountName) {
             DB::table('accounts')->insert([
-                'name' => $accountName
+                'name' => $accountName,
             ]);
         }
     }

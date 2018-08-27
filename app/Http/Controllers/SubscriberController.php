@@ -41,23 +41,39 @@ class SubscriberController extends Controller
                
          }
         
+        // check if not reactivating existing user
+         
+        $subscriber = new Subscriber;
+        $subscriber->email = $email;
+        $subscriber->name = $request->input('name');
+         
+        // set account_id 
+        // set it to 1 now, maybe use it in next version
+        $subscriber->account_id = 1;
+        $subscriber->state = 'unconfirmed';
+         
         $ret = Subscriber::create($request->all());
         return $ret;
+        // 201
+        
     }
 
     public function update(Request $request, $id)
     {
-        $article = Subscriber::findOrFail($id);
-        $article->update($request->all());
+        $subscriber = Subscriber::findOrFail($id);
+        
+        // check if not reactivating existing user
+        
+        $subscriber->update($request->all());
 
-        return $article;
+        return $subscriber;
     }
 
     // deleting turned off
     public function delete(Request $request, $id)
     {
-        //$article = Subscriber::findOrFail($id);
-        //$article->delete();
+        //$subscriber = Subscriber::findOrFail($id);
+        //$subscriber->delete();
 
         return 403;
     }
