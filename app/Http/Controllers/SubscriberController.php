@@ -42,7 +42,7 @@ class SubscriberController extends Controller
         }
 
         // check if not reactivating existing user
-        $checkSubscribers = Subscriber::where('email', $email)->get(); 
+        $checkSubscribers = Subscriber::where('email', $email)->get();
         if ($checkSubscribers->count()) {
             // already exists
             $httpStatus = 409;
@@ -62,7 +62,6 @@ class SubscriberController extends Controller
         if ($fields && is_array($fields)) {
             // check fields
             foreach ($fields as $field) {
-            
                 // check if field has a type
                 // and name
                 if (!(
@@ -80,10 +79,8 @@ class SubscriberController extends Controller
                         );
                
                         return response()->json($returnData, $httpStatus);
-                
                 }
             }
-            
         }
         
         
@@ -105,7 +102,7 @@ class SubscriberController extends Controller
                     'detail' => 'Subscriber cannot be saved']],
             );
                
-            return response()->json($returnData, $httpStatus);  
+            return response()->json($returnData, $httpStatus);
         }
 
         // add fields
