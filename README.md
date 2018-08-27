@@ -22,8 +22,19 @@ DB_DATABASE=/home/vagrant/userapi/database/database.sqlite
 
 or use sqlite in memory:
 
+        'sqlite' => [
+            'driver' => 'sqlite',
+            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            'prefix' => '',
+        ],
+        'sqlite_testing' => [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ],
 
 
+Testing enviroment already uses in-memory sqlite databse, for speed and convenience.
 
 
 or use any other DB like mysql
