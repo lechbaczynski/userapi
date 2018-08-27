@@ -28,18 +28,35 @@ class SubscriberController extends Controller
         
         // validate e-mail
         // use our class, encapsulating validation
-        if (!EmailValidator::valid($email)) {
+        if (!$email || !EmailValidator::valid($email)) {
             $httpStatus = 422;
             $returnData = array(
-                'errors' => [['status' => $httpStatus,
-                'Title' => 'Wrong e-mail',
-                'detail' => "E-mail must be valid and domain must be active"]],
+                'errors' => [
+                    ['status' => $httpStatus,
+                    'Title'     => 'Wrong e-mail',
+                    'detail' => 'E-mail must be valid and domain must be active']],
             );
                
             return response()->json($returnData, $httpStatus);
         }
 
         // check if not reactivating existing user
+        $checkSubscribers = Subscriber::where('email', $email)->get(); 
+        // dd($checkSubscribers->count());
+        if ($checkSubscribers->count()) {
+            // already exists
+            $httpStatus = 409;
+            $returnData = array(
+                'errors' => [
+                    ['status' => $httpStatus,
+                    'Title'     => 'Duplicate e-mail',
+                    'detail' => 'E-mail already exists']],
+            );
+               
+            return response()->json($returnData, $httpStatus);
+        }
+
+        
         $subscriber = new Subscriber;
         $subscriber->email = $email;
         $subscriber->name = $request->input('name');
@@ -48,13 +65,31 @@ class SubscriberController extends Controller
         // check for fields
         if ($request->input('fields') && is_array($request->input('fields'))) {
             // add fields
+            
+            $fields = $request->input('fields');
+            foreach ($fields as $field) {
+                
+                
+            }
         }
         
         // set account_id
         // set it to 1 now, maybe use it in next version
         $subscriber->account_id = 1;
         $subscriber->state = 'unconfirmed';
-        $id = $subscriber->save();
+        $saved = $subscriber->save();
+        
+        if (!$saved) {
+            $httpStatus = 500;
+            $returnData = array(
+                'errors' => [
+                    ['status' => $httpStatus,
+                    'Title'  => 'Problem with adding subscriber',
+                    'detail' => 'Subscriber cannot be saved']],
+            );
+               
+            return response()->json($returnData, $httpStatus);  
+        }
          
         $httpStatus = 201;
         $returnData = array(
