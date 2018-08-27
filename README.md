@@ -4,7 +4,7 @@ It is standard Laravel app, install it like any other Laravel app.
 I used Homestad virtual machine, set up with vagrant 
 ( https://laravel.com/docs/5.6/homestead )
 
-I have chosen sqlite driver, to not make you set up the mysql databse, 
+I have chosen sqlite driver, to not make you set up the mysql database, 
 but of course it can be changed to mysql in config/database.php file.
 
 
