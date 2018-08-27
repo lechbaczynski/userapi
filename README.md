@@ -9,12 +9,14 @@ but of course it can be change to mysql in config/database.php
 
 
 To set up  the database:
-either use the database.sqlite
+either use the database.sqlite:
 
 touch database/database.sqlite
+
 make sure .env has right database file set, example:
 
 DB_CONNECTION=sqlite
+
 DB_DATABASE=/home/vagrant/userapi/database/database.sqlite
 
 
