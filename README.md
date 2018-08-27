@@ -28,6 +28,7 @@ DB_CONNECTION=sqlite_testing
 
 and set up it in config/database.php like for example: 
 
+```
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
@@ -38,10 +39,11 @@ and set up it in config/database.php like for example:
             'database' => ':memory:',
             'prefix' => '',
         ],
-
+```
 
 or (easier version) use sqlite in memory for both testing and dev:
 
+```
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => ':memory:',
@@ -52,7 +54,7 @@ or (easier version) use sqlite in memory for both testing and dev:
             'database' => ':memory:',
             'prefix' => '',
         ],
-
+```
 
 Testing enviroment already uses in-memory sqlite database, for speed and convenience.
 
@@ -76,3 +78,29 @@ php artisan db:seed
 ## Testing:
 
 ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/
+
+
+You can also send JSOn payload in POST to api address, for example:
+
+http://localhost:8000/api/subscribers/
+
+
+Example raw JSON:
+
+```json
+    {
+    "name": "John",
+    "email": "example@gmail.com",
+    "fields": [
+            {
+            "type": "number",
+            "title": "age"
+            },
+            {
+            "type": "string",
+            "title": "source",
+            "value": "website"
+            }
+    ]
+    }
+```
