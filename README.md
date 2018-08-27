@@ -4,11 +4,15 @@ It is standard Laravel app, install it like any other Laravel app.
 I used Homestad virtual machine, set up with vagrant 
 ( https://laravel.com/docs/5.6/homestead )
 
+Use php version 7+
+
+## Database
+
 I have chosen sqlite driver, to not make you set up the mysql database, 
 but of course it can be changed to mysql in config/database.php file.
 
 
-To set up  the database:
+To set up the database:
 
 Either use the database.sqlite:
 
@@ -62,23 +66,24 @@ Testing enviroment already uses in-memory sqlite database, for speed and conveni
 Or use any other DB like mysql
 
 
+## Set up databases by running 
+php artisan migrate
+php artisan db:seed
+
+
 ## Composer
 
 There is a library added for validating e-mail in composer.json
 
 Run composer update
 
-## Set up databases by running 
-php artisan migrate
-php artisan db:seed
-
-
-
 
 ## Testing:
 
-./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/
+Tests are in the Tests directory - Unit and Functiona tests.
+Running like:
 
+./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/
 
 You can also send JSON payload in POST to API address, for example:
 
