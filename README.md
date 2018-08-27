@@ -5,22 +5,27 @@ I used Homestad virtual machine, set up with vagrant
 ( https://laravel.com/docs/5.6/homestead )
 
 I have chosen sqlite driver, to not make you set up the mysql databse, 
-but of course it can be change to mysql in config/database.php
+but of course it can be changed to mysql in config/database.php file.
 
 
 To set up  the database:
-either use the database.sqlite:
+
+Either use the database.sqlite:
 
 touch database/database.sqlite
 
-make sure .env has right database file set, example:
+Then copy .env.example to .env and .env.testing
+
+Make sure .env has right database file set, example:
 
 DB_CONNECTION=sqlite
-
 DB_DATABASE=/home/vagrant/userapi/database/database.sqlite
 
+in .env.testing change it to:
 
-or use sqlite in memory:
+DB_CONNECTION=sqlite_testing
+
+and set up it in config/database.php like for example: 
 
         'sqlite' => [
             'driver' => 'sqlite',
@@ -34,14 +39,30 @@ or use sqlite in memory:
         ],
 
 
-Testing enviroment already uses in-memory sqlite databse, for speed and convenience.
+or (easier version) use sqlite in memory for both testing and dev:
+
+        'sqlite' => [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ],
+        'sqlite_testing' => [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ],
 
 
-or use any other DB like mysql
+Testing enviroment already uses in-memory sqlite database, for speed and convenience.
 
-set up databases by running 
+
+Or use any other DB like mysql
+
+
+# Set up databases by running 
 php artisan migrate
 php artisan db:seed
+
 
 
 
