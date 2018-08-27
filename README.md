@@ -63,11 +63,25 @@ or (easier version) use sqlite in memory for both testing and dev:
 Testing enviroment already uses in-memory sqlite database, for speed and convenience.
 
 
-Or use any other DB like mysql
+Add:
+```
+            <env name="DB_CONNECTION" value="sqlite_testing"/>
+```
+
+in phpunit.xml inside 
+
+```
+<php>
+
+</php>
+```
 
 
-## Set up databases by running 
+
+### Set up databases by running 
+
 php artisan migrate
+
 php artisan db:seed
 
 
