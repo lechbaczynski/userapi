@@ -1,4 +1,4 @@
-## Running
+# Seting up and running
 
 It is standard Laravel app, install it like any other Laravel app. 
 I used Homestad virtual machine, set up with vagrant 
@@ -59,7 +59,13 @@ Testing enviroment already uses in-memory sqlite database, for speed and conveni
 Or use any other DB like mysql
 
 
-# Set up databases by running 
+## Composer
+
+There is a library added for validating e-mail in composer.json
+
+Run composer update
+
+## Set up databases by running 
 php artisan migrate
 php artisan db:seed
 
