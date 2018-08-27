@@ -65,7 +65,6 @@ class AddingSubscriberTest extends TestCase
      */
     public function testAddSubscriberWrongEmail()
     {
-        
         $email = 'examplegmail.com';
         
         $response = $this->withHeaders([
@@ -85,34 +84,51 @@ class AddingSubscriberTest extends TestCase
         $this->assertDatabaseMissing('subscribers', [
             'email' => $email,
         ]);
-        
     }
 
     public function testAddSubscriberWithOneField()
     {
+        $email = 'example@gmail.com';
+        
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/api/subscribers/', 
-                ['name' => 'John',
-                 'email' => "example@gmail.com",
-                  'fields' => [
-                      ['title' => 'source', 'type' => 'string', 'value' => 'website'],
-                    ]]);
+        ])->json('POST', '/api/subscribers/',
+            ['name' => 'John',
+            'email' => $email,
+            'fields' => [
+                ['title' => 'source', 'type' => 'string', 'value' => 'website'],
+            ]]);
 
         $response
             ->assertStatus(201)
             ->assertJson([
                 'created' => true,
             ]);
+        
+        // check if exists in the database
+        $id = $response->getData()->id;
+
+        $this->assertDatabaseHas('subscribers', [
+            'id' => $id,
+        ]);
+        
+        $this->assertDatabaseHas('subscribers', [
+            'email' => $email,
+        ]);
+        
+        // check if has fields
+        // TODO
     }
 
     public function testAddSubscriberWithManyFields()
     {
+        $email = 'example2@gmail.com';
+        
         $response = $this->withHeaders([
             'X-Header' => 'Value',
         ])->json('POST', '/api/subscribers/',
                 ['name' => 'John',
-                 'email' => "example@gmail.com",
+                 'email' => $email,
                   'fields' => [
                      ['title' => 'source', 'type'=> 'string', 'value' => 'website'],
                      ['title' => 'age', 'type' => 'number', 'value' => 20],
@@ -123,11 +139,20 @@ class AddingSubscriberTest extends TestCase
             ->assertStatus(201)
             ->assertJson([
                 'created' => true,
-            ]);    
+            ]);
     
         // check if exists in the database
+        $id = $response->getData()->id;
 
+        $this->assertDatabaseHas('subscribers', [
+            'id' => $id,
+        ]);
         
+        $this->assertDatabaseHas('subscribers', [
+            'email' => $email,
+        ]);
         
+        // check if has fields
+        // TODO
     }
 }
