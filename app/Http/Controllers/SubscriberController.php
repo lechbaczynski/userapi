@@ -11,13 +11,13 @@ class SubscriberController extends Controller
  
     public function index()
     {
-        return 403;
+        return response('Forbidden', 403);
         // return Subscriber::all();
     }
  
     public function show($id)
     {
-        return 403;  
+        return response('Forbidden', 403);
         // return Subscriber::find($id);
     }
 
@@ -28,8 +28,7 @@ class SubscriberController extends Controller
         
         // validate e-mail
         // use our class, encapsulating validation
-        if (!EmailValidator::valid($email))  {
-              
+        if (!EmailValidator::valid($email)) {
             $httpStatus = 422;
             $returnData = array(
                 'errors' => [['status' => $httpStatus,
@@ -38,24 +37,37 @@ class SubscriberController extends Controller
             );
                
             return response()->json($returnData, $httpStatus);
-               
-         }
-        
+        }
+
         // check if not reactivating existing user
-         
         $subscriber = new Subscriber;
         $subscriber->email = $email;
         $subscriber->name = $request->input('name');
-         
-        // set account_id 
+        
+        
+        // check for fields
+        if ($request->input('fields') && is_array($request->input('fields'))) {
+            // add fields
+        }
+        
+        // set account_id
         // set it to 1 now, maybe use it in next version
         $subscriber->account_id = 1;
         $subscriber->state = 'unconfirmed';
+        $id = $subscriber->save();
          
-        $ret = Subscriber::create($request->all());
-        return $ret;
-        // 201
+        $httpStatus = 201;
+        $returnData = array(
+            'created' => true,
+            'status' => $httpStatus,
+            'id' => $subscriber->id
+        );
+               
+        return response()->json($returnData, $httpStatus);
         
+        //$ret = Subscriber::create($request->all());
+        //return $ret;
+        // 201
     }
 
     public function update(Request $request, $id)

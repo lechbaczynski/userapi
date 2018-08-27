@@ -15,8 +15,8 @@ class CreateSubscribersTable extends Migration
     {
         Schema::create('subscribers', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('accounts_id')->unsigned();
-            $table->foreign('accounts_id')->references('id')->on('account');
+            $table->integer('account_id')->unsigned();
+            $table->foreign('account_id')->references('id')->on('accounts');
             $table->string('name')->nullable();
             $table->string('email')->unique();
             // not a real emum in Laravel

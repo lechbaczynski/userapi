@@ -3,12 +3,15 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ExampleTest extends TestCase
+// use Illuminate\Foundation\Testing\WithoutMiddleware;
+
+class BasicTest extends TestCase
 {
     /**
-     * A basic test example.
+     * Basic test
      *
      * @return void
      */

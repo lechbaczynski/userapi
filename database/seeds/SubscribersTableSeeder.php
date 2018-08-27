@@ -12,17 +12,14 @@ class SubscribersTableSeeder extends Seeder
      */
     public function run()
     {
-        
         $faker = Faker::create();
         for ($i = 0; $i<5; $i++) {
             DB::table('subscribers')->insert([
                 'email' => $faker->safeEmail,
                 'name' => $faker->name,
                 'state' => 'unconfirmed',
-                'accounts_id' => 1
+                'account_id' => 1
             ]);
-            
-            
         }
     }
 }

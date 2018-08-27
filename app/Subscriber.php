@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subscriber extends Model
 {
-    protected $fillable = ['accounts_id', 'name', 'email', 'state']; 
+    protected $fillable = ['account_id', 'name', 'email', 'state'];
     
-    
+    public function fields()
+    {
+        return $this->hasMany('App\Field');
+    }
 }

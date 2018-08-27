@@ -29,8 +29,13 @@ class EmailValidatorTest extends TestCase
      */
     public function testIncorrect()
     {
-        $this->assertFalse(EmailValidator::valid('examplegmail.com'));
+        $this->assertFalse(EmailValidator::valid('0'));
+        $this->assertFalse(EmailValidator::valid(0));
+        $this->assertFalse(EmailValidator::valid('abc'));
         $this->assertFalse(EmailValidator::valid('examplegmailcom'));
+        $this->assertFalse(EmailValidator::valid('abc.net'));
+        $this->assertFalse(EmailValidator::valid('examplegmail.com'));
+        $this->assertFalse(EmailValidator::valid('abc@net@asdf'));
         $this->assertFalse(EmailValidator::valid('@examplegmailcom'));
     }
     
@@ -45,5 +50,4 @@ class EmailValidatorTest extends TestCase
         $this->assertFalse(EmailValidator::valid('example@examp..legmailcom'));
         $this->assertFalse(EmailValidator::valid('dave@gmoooooooil.com'));
     }
-    
 }
