@@ -18,7 +18,7 @@ class EmailValidatorTest extends TestCase
      */
     public function testCorrect()
     {
-        $this->assertTrue(EmailValidator::valid('lechbaczynski@arystoteles.pl'));
+        $this->assertTrue(EmailValidator::valid('example@gmail.com'));
     }
     
     
