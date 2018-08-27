@@ -128,9 +128,13 @@ class SubscriberController extends Controller
 
     public function update(Request $request, $id)
     {
+        return response('Forbidden', 403);
+
         $subscriber = Subscriber::findOrFail($id);
         
         // check if not reactivating existing user
+        //
+        
         
         $subscriber->update($request->all());
 
@@ -143,6 +147,6 @@ class SubscriberController extends Controller
         //$subscriber = Subscriber::findOrFail($id);
         //$subscriber->delete();
 
-        return 403;
+        return response('Forbidden', 403);
     }
 }

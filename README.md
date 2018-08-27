@@ -80,7 +80,7 @@ php artisan db:seed
 ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/
 
 
-You can also send JSOn payload in POST to api address, for example:
+You can also send JSON payload in POST to API address, for example:
 
 http://localhost:8000/api/subscribers/
 
