@@ -153,6 +153,12 @@ One:
 
 (after initial seeding, subcriber number 6 should have a few fields)
 
+
+These index and show functions are used only for making it easier 
+for you to check how the app works.
+Should be removed if we do not want to expose
+subscribers' and fields' data to anyone.
+
 ### E-mail validation
 
 The e-mail of newly added subscriber is checked, using 
@@ -161,12 +167,28 @@ The e-mail of newly added subscriber is checked, using
 
 https://github.com/daveearley/Email-Validation-Tool
 
-With host checking, but with MX checking turned off 
-(it generated false negatives, example on gmail.com )
+With syntax and host checking functions, but with MX checking turned off.
+
+MX checking generated false negatives, for example for gmail.com
 
 
 ## Testing API - fields
 
+You can POST raw JSON like:
+
+   {
+        "title": "Yet another field",
+        "type": "string",
+        "subscriber_email": "ihavefields@example.com"
+    }
+
+to 
+
+  http://localhost:8000/api/fields/
+
+It should return JSON like:
+
+    {"created":true,"status":201,"id":9}
 
 
 
@@ -177,7 +199,7 @@ Some files in database folder break PSR-2 rule:
 
   Each class must be in a namespace of at least one level (a top-level vendor name)
 
-This is due to laravel desing, see:
+This is due to Laravel design, see:
 
 https://stackoverflow.com/questions/41233837/why-laravel-migrations-class-doesnt-have-a-namespace
 

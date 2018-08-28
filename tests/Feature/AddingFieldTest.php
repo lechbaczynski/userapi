@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Subscriber as Subscriber;
+use App\Field as Field;
 
 // use Illuminate\Foundation\Testing\WithoutMiddleware;
 
@@ -86,7 +87,7 @@ class AddingFieldTest extends TestCase
         );
         
         // check response
-        $response->assertStatus(409);
+        $response->assertStatus(422);
     }
 
     /**

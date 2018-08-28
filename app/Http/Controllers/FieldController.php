@@ -7,6 +7,7 @@ use App\Field;
 use App\Subscriber;
 use App\Http\Resources\FieldResource;
 use Illuminate\Validation\Rule;
+use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
 
 class FieldController extends Controller
 {
@@ -51,7 +52,7 @@ class FieldController extends Controller
         $subscriber = null;
         $subscriber = Subscriber::where('email', $subscriberEmail)->first();
         if (!$subscriber) {
-            $httpStatus = 409;
+            $httpStatus = 422;
             $returnData = array(
                 'errors' => [
                     ['status' => $httpStatus,
@@ -95,7 +96,6 @@ class FieldController extends Controller
             'status' => $httpStatus,
             'id' => $field->id
         );
-               
         return response()->json($returnData, $httpStatus);
     }
 
@@ -120,7 +120,52 @@ class FieldController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+          $rules = [
+            'title' => 'required|max:255',
+            'type' => [
+                'required',
+                'max:255',
+                Rule::in(Field::$allowedTypes),
+            ],
+            'value' => 'nullable|max:255',
+        ];
+        
+        $response = $this->checkJSON($request, $rules);
+        if ($response) {
+            return $response;
+        }
+
+        try {
+            $field = Field::FindOrFail($id);
+        } catch(ModelNotFoundException $e) {
+            $httpStatus = 404;
+            $returnData = array(
+                'errors' => [
+                ['status' => $httpStatus,
+                'Title'     => 'Field not found',
+               'detail' => 'Field not found']],
+            );
+            return response()->json($returnData, $httpStatus);
+        }
+
+        
+        $field->title = $request->input('title');
+        $field->type = $request->input('type');
+        if ($request->input('value') !== null ) {
+            $field->value = $request->input('value');
+        }
+        
+        $field->save();
+        
+        $httpStatus = 200;
+        $returnData = array(
+            'created' => true,
+            'status' => $httpStatus,
+            'id' => $field->id
+        );
+               
+        return response()->json($returnData, $httpStatus);
+        
     }
 
     /**
