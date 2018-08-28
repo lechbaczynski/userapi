@@ -188,16 +188,20 @@ You can send JSON payload in PUT to API address, for example:
 
 example:
 
+```json
     {
 	"name": "Johny1",
 	"state": "junk"
     }
+````
 
 or
+
+```json
     {
        "name": "Johny1"
     }
-
+```
 
 You *cannot change e-mail address*, this would be bad idea.
 
@@ -208,11 +212,13 @@ You *cannot change e-mail address*, this would be bad idea.
 
 You can POST raw JSON like:
 
-   {
+```json
+    {
         "title": "Yet another field",
         "type": "string",
         "subscriber_email": "ihavefields@example.com"
     }
+````
 
 to 
 
@@ -220,19 +226,21 @@ to
 
 It should return JSON like:
 
+```
     {"created":true,"status":201,"id":9}
-
+```
 
 ### Updating
 
 You can PUT JSON like:
 
+```
     {
         "title": "Yet another field",
         "type": "string",
         "value": "foobar"
     }
-
+```
 
 to 
 
@@ -240,14 +248,15 @@ to
 
 It should return JSON like:
 
+```
     {"updated":true,"status":200,"id":1}
+```
 
 When updating a field that does not exists, like 
 
     http://localhost:8000/api/fields/1
 
 It returns 404
-
 
 
 
