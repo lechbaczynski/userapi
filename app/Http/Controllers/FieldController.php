@@ -36,7 +36,7 @@ class FieldController extends Controller
             'type' => [
                 'required',
                 'max:255',
-                Rule::in(Field::$allowedTypes),
+                Rule::in(Field::ALLOWEDTYPES),
             ],
             'value' => 'nullable|max:255',
             'subscriber_email'  => 'required|max:255',
@@ -120,12 +120,12 @@ class FieldController extends Controller
      */
     public function update(Request $request, $id)
     {
-          $rules = [
+        $rules = [
             'title' => 'required|max:255',
             'type' => [
                 'required',
                 'max:255',
-                Rule::in(Field::$allowedTypes),
+                Rule::in(Field::ALLOWEDTYPES),
             ],
             'value' => 'nullable|max:255',
         ];
@@ -137,7 +137,7 @@ class FieldController extends Controller
 
         try {
             $field = Field::FindOrFail($id);
-        } catch(ModelNotFoundException $e) {
+        } catch (ModelNotFoundException $e) {
             $httpStatus = 404;
             $returnData = array(
                 'errors' => [
@@ -147,11 +147,10 @@ class FieldController extends Controller
             );
             return response()->json($returnData, $httpStatus);
         }
-
         
         $field->title = $request->input('title');
         $field->type = $request->input('type');
-        if ($request->input('value') !== null ) {
+        if ($request->input('value') !== null) {
             $field->value = $request->input('value');
         }
         
@@ -159,13 +158,12 @@ class FieldController extends Controller
         
         $httpStatus = 200;
         $returnData = array(
-            'created' => true,
+            'updated' => true,
             'status' => $httpStatus,
             'id' => $field->id
         );
                
         return response()->json($returnData, $httpStatus);
-        
     }
 
     /**

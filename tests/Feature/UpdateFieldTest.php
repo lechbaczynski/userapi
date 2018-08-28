@@ -5,9 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Subscriber as Subscriber;
 use App\Field as Field;
-
 
 // use Illuminate\Foundation\Testing\WithoutMiddleware;
 
@@ -59,9 +57,8 @@ class UpdateFieldTest extends TestCase
         $field = Field::find($id);
                 
         // check if it has 'date' type
-        $this->assertEquals($field->type , 'date');
+        $this->assertEquals($field->type, 'date');
         $this->assertEquals($field->title, $title);
-
     }
 
     public function testUpdateFieldVithValue()
@@ -93,12 +90,12 @@ class UpdateFieldTest extends TestCase
         $field = Field::find($id);
                 
         // check if it has 'date' type
-        $this->assertEquals($field->type , 'string');
+        $this->assertEquals($field->type, 'string');
         $this->assertEquals($field->title, $title);
         $this->assertEquals($field->value, $value);
-    }    
+    }
     
-        public function testUpdateFieldThatDoNotExist()
+    public function testUpdateFieldThatDoNotExist()
     {
         
         $title = 'Changed not exisitnig field';
@@ -122,7 +119,5 @@ class UpdateFieldTest extends TestCase
         $this->assertDatabaseMissing('fields', [
             'id' => $id,
         ]);
-        
-    }  
-    
+    }
 }

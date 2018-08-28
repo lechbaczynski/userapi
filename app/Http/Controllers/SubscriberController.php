@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Subscriber;
 use App\Field;
 use App\EmailValidator as EmailValidator;
+use Illuminate\Validation\Rule;
 use App\Http\Resources\SubscriberResource;
 
 class SubscriberController extends Controller
@@ -17,7 +18,6 @@ class SubscriberController extends Controller
      */
     public function index()
     {
-        // TODO: 403
         // It should be forbidden, but I am leaving it now, so ypu can easily
         // query the API
         // return response('Forbidden', 403);
@@ -32,20 +32,6 @@ class SubscriberController extends Controller
      */
     public function store(Request $request)
     {
-//        $data =  $request->json()->all();
-//
-//        if (!$data) {
-//            // no payload or wrong payload
-//            $httpStatus = 422;
-//            $returnData = array(
-//                'errors' => [
-//                    ['status' => $httpStatus,
-//                    'Title'     => 'Wrong data sent',
-//                    'detail' => 'The JSON sent is empty or incorrect']],
-//            );
-//            return response()->json($returnData, $httpStatus);
-//        }
- 
         $rules = [
             'email' => 'required|max:255', // unique:subscribers - will check later
             'name'  => 'nullable|max:255',
@@ -97,7 +83,7 @@ class SubscriberController extends Controller
                 if (!(
                     ($field['title'])
                     &&
-                    (in_array($field['type'], Field::$allowedTypes) )
+                    (in_array($field['type'], Field::ALLOWEDTYPES) )
                     
                     ) ) {
                         $httpStatus = 422;
@@ -107,7 +93,6 @@ class SubscriberController extends Controller
                             'Title'  => 'Wrong fields',
                             'detail' => 'Error in fields']],
                         );
-               
                         return response()->json($returnData, $httpStatus);
                 }
             }
@@ -175,13 +160,53 @@ class SubscriberController extends Controller
         
         $subscriber = Subscriber::findOrFail($id);
         
-        // check if not reactivating existing user
-        // TODO
-        
-        
-        $subscriber->update($request->all());
+        $rules = [
+            'name' => 'nullable|max:255',
+            'state' => [
+                Rule::in(Subscriber::ALLOWEDSTATES),
+            ],
+            // no e-mail - one should not be able to chane an e-mail of a subscriber
+        ];
+        $response = $this->checkJSON($request, $rules);
+        if ($response) {
+            return $response;
+        }
 
-        return $subscriber;
+        // check if not reactivating existing user
+        $newState = $request->input('state');
+        if (// is unsubscribed and someone wants to chane to any other state
+                ( $subscriber->state == 'unsubscribed' && $newState != 'unsubscribed')
+                // or is bounced and someone tries to make him active or unconfirmed
+                ||
+                ($subscriber->state == 'bounced' && ( $newState == 'active' || $newState == 'unconfirmed') )
+
+            ) {
+                $httpStatus = 422;
+                $returnData = array(
+                    'errors' => [
+                    ['status' => $httpStatus,
+                    'Title'  => 'Status change not allowed',
+                    'detail' => 'Status change not allowed']],
+                );
+                return response()->json($returnData, $httpStatus);
+        }
+
+        $subscriber->name   = $request->input('name');
+        $subscriber->state  = $request->input('state');
+        
+        $subscriber->save();
+        
+        $httpStatus = 200;
+        $returnData = array(
+            'updated' => true,
+            'status' => $httpStatus,
+            'id' => $subscriber->id
+        );
+               
+        return response()->json($returnData, $httpStatus);
+        
+        //$subscriber->update($request->all());
+        // return $subscriber;
     }
 
     /**

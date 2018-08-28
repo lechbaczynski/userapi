@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Subscriber;
 
 class CreateSubscribersTable extends Migration
 {
@@ -20,11 +21,7 @@ class CreateSubscribersTable extends Migration
             $table->string('name')->nullable();
             $table->string('email')->unique();
             // not a real emum in Laravel
-            $table->enum('state', [ 'active',
-                                    'unsubscribed',
-                                    'junk',
-                                    'bounced',
-                                    'unconfirmed']);
+            $table->enum('state', Subscriber::ALLOWEDSTATES);
             // $table->rememberToken();
             $table->timestamps();
         });

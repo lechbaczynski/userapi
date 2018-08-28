@@ -22,7 +22,7 @@ class SubscribersTableSeeder extends Seeder
             ]);
         }
         
-        // user with fields
+        // user with fields // 6
         DB::table('subscribers')->insert([
             'email' => 'ihavefields@example.com',
             'name' => "John H. Fields",
@@ -31,12 +31,21 @@ class SubscribersTableSeeder extends Seeder
         ]);
         
         
-        // user for testing fields
+        // user for testing fields // 7
         DB::table('subscribers')->insert([
             'email' => 'ilikefields@example.com',
             'name' => "Ned Fields",
             'state' => 'unconfirmed',
             'account_id' => 1
         ]);
+        
+        // user unsubscribed // 8
+        DB::table('subscribers')->insert([
+            'email' => 'iamunsubscribed@example.com',
+            'name' => "Donna Email",
+            'state' => 'unsubscribed',
+            'account_id' => 1
+        ]);
+        
     }
 }
