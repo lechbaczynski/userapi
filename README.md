@@ -102,7 +102,10 @@ Run it like:
 
 ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/
 
-You can also send JSON payload in POST to API address, for example:
+
+## Testing API - subscribers
+
+You can send JSON payload in POST to API address, for example:
 
     http://host:port/api/subscribers/
 
@@ -150,9 +153,7 @@ One:
 
 (after initial seeding, subcriber number 6 should have a few fields)
 
-
-
-# E-mail validation
+### E-mail validation
 
 The e-mail of newly added subscriber is checked, using 
 
@@ -162,5 +163,11 @@ https://github.com/daveearley/Email-Validation-Tool
 
 With host checking, but with MX checking turned off 
 (it generated false negatives, example on gmail.com )
+
+
+## Testing API - fields
+
+
+
 
 

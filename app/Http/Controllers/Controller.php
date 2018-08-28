@@ -28,7 +28,6 @@ class Controller extends BaseController
             return response()->json($returnData, $httpStatus);
         }
         
-               
         $validator = Validator::make($data, $rules);
         if (!$validator->passes()) {
             // dd($validator->errors()->all());
@@ -41,8 +40,7 @@ class Controller extends BaseController
             );
             return response()->json($returnData, $httpStatus);
         }
-
-        
+       
         return $data;
     }
     
