@@ -20,14 +20,10 @@ class SubscriberController extends Controller
     public function index()
     {
         // TODO: 403
-        // It should be forbidden, but I am leaving it now, so ypu can easily 
+        // It should be forbidden, but I am leaving it now, so ypu can easily
         // query the API
         // return response('Forbidden', 403);
-        
         return SubscriberResource::collection(Subscriber::all());
-        
-        
-        
     }
 
     /**
@@ -54,10 +50,10 @@ class SubscriberController extends Controller
         
         
         
-         $rules = [
+        $rules = [
             'email' => 'required|max:255', // unique:subscribers - will check later
             'name'  => 'nullable|max:255',
-         ];
+        ];
         
         $validator = Validator::make($data, $rules);
         if (!$validator->passes()) {
@@ -173,8 +169,6 @@ class SubscriberController extends Controller
         );
                
         return response()->json($returnData, $httpStatus);
-        
-        
     }
 
     /**
@@ -185,10 +179,8 @@ class SubscriberController extends Controller
      */
     public function show($id)
     {
-        //
         $subscriber = Subscriber::findOrFail($id);
         return new SubscriberResource($subscriber);
-             
     }
 
     /**

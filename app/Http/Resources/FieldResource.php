@@ -21,7 +21,6 @@ class FieldResource extends JsonResource
         
         if ($this->value !== null) {
             $data['value'] = $this->value;
-            
         }
         
         return $data;

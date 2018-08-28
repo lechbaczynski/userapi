@@ -78,7 +78,9 @@ in phpunit.xml inside
 
 
 
-### Set up databases by running 
+### Set up databases 
+
+by running:
 
 php artisan migrate
 
@@ -95,13 +97,19 @@ Run composer update
 ## Testing:
 
 Tests are in the Tests directory - Unit and Feature tests.
-Running like:
+
+Run it like:
 
 ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/
 
 You can also send JSON payload in POST to API address, for example:
 
-http://localhost:8000/api/subscribers/
+    http://host:port/api/subscribers/
+
+example:
+
+    http://localhost:8000/api/subscribers/
+
 
 
 Example raw JSON:
@@ -109,7 +117,7 @@ Example raw JSON:
 ```json
     {
     "name": "John",
-    "email": "example@gmail.com",
+    "email": "jonh.example@example.com",
     "fields": [
             {
             "type": "number",
@@ -123,3 +131,36 @@ Example raw JSON:
     ]
     }
 ```
+
+It should return response like:
+
+    {"created":true,"status":201,"id":8}
+
+Where id is an id of newly created subscriber.
+
+You can see subcribers list (JSON, modified throgh Resource layer) at:
+
+All:
+
+    http://localhost:8000/api/subscribers/
+
+One:
+
+    http://localhost:8000/api/subscribers/6 
+
+(after initial seeding, subcriber number 6 should have a few fields)
+
+
+
+# E-mail validation
+
+The e-mail of newly added subscriber is checked, using 
+
+ daveearley/Email-Validation-Tool
+
+https://github.com/daveearley/Email-Validation-Tool
+
+With host checking, but with MX checking turned off 
+(it generated false negatives, example on gmail.com )
+
+
