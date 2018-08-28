@@ -69,10 +69,12 @@ class AddingSubscriberTest extends TestCase
         
         $response = $this->withHeaders([
         'X-Header' => 'Value',
-        ])->json('POST',
-                '/api/subscribers/',
-                ['name' => 'John',
-                'email' => $email]);
+        ])->json(
+            'POST',
+            '/api/subscribers/',
+            ['name' => 'John',
+            'email' => $email]
+        );
 
         $response
             ->assertStatus(422)
@@ -92,12 +94,17 @@ class AddingSubscriberTest extends TestCase
         
         $response = $this->withHeaders([
             'X-Header' => 'Value',
-        ])->json('POST', '/api/subscribers/',
-            ['name' => 'John',
-            'email' => $email,
-            'fields' => [
-                ['title' => 'source', 'type' => 'string', 'value' => 'website'],
-            ]]);
+        ])->json(
+            'POST',
+            '/api/subscribers/',
+            [
+                'name' => 'John',
+                'email' => $email,
+                'fields' => [
+                    ['title' => 'source', 'type' => 'string', 'value' => 'website'],
+                ]
+            ]
+        );
 
         $response
             ->assertStatus(201)
@@ -124,32 +131,35 @@ class AddingSubscriberTest extends TestCase
         
         
         $this->assertArraySubset(
-           [['title' => 'source', 
-             'type' => 'string', 
-             'value' => 'website', 
-             'subscriber_id' => $id 
-                ]],
-            $fields);
-        
-        // dd($fields);
-        
-        
+            [
+                ['title' => 'source',
+                'type' => 'string',
+                'value' => 'website',
+                'subscriber_id' => $id
+                ]
+            ],
+            $fields
+        );
     }
 
     public function testAddSubscriberWithManyFields()
     {
         $email = 'example2@gmail.com';
         
-        $response = $this->withHeaders([
-            'X-Header' => 'Value',
-        ])->json('POST', '/api/subscribers/',
-                ['name' => 'John',
-                 'email' => $email,
-                  'fields' => [
-                     ['title' => 'source', 'type'=> 'string', 'value' => 'website'],
-                     ['title' => 'age', 'type' => 'number', 'value' => 20],
-                     ['title' => 'sex', 'type' => 'string'], // empty value
-                    ]]);
+        $response = $this->withHeaders(['X-Header' => 'Value',])
+                ->json(
+                    'POST',
+                    '/api/subscribers/',
+                    ['name' => 'John',
+                    'email' => $email,
+                    'fields' => [
+                        ['title' => 'source', 'type'=> 'string', 'value' => 'website'],
+                        ['title' => 'age', 'type' => 'number', 'value' => 20],
+                        ['title' => 'sex', 'type' => 'string'], // empty value
+                    ]
+                    ]
+                );
+        
 
         $response
             ->assertStatus(201)
@@ -176,24 +186,20 @@ class AddingSubscriberTest extends TestCase
         $counter = 0;
         foreach ($fields as $field) {
             if ($field['title'] == 'source') {
-                $this->assertEquals($field['type'], 'string'); 
-                $this->assertEquals($field['value'], 'website'); 
+                $this->assertEquals($field['type'], 'string');
+                $this->assertEquals($field['value'], 'website');
+                $counter++;
+            } elseif ($field['title'] == 'age') {
+                $this->assertEquals($field['type'], 'number');
+                $this->assertEquals($field['value'], 20);
+                $counter++;
+            } elseif ($field['title'] == 'sex') {
+                $this->assertEquals($field['type'], 'string');
+                $this->assertEquals($field['value'], null);
                 $counter++;
             }
-            else if ($field['title'] == 'age') {
-                $this->assertEquals($field['type'], 'number'); 
-                $this->assertEquals($field['value'], 20); 
-                $counter++;
-            }
-            else if ($field['title'] == 'sex') {
-                $this->assertEquals($field['type'], 'string'); 
-                $this->assertEquals($field['value'], null); 
-                $counter++;
-            }
-            
         }
         
-         $this->assertEquals($counter, 3); 
-        
+         $this->assertEquals($counter, 3);
     }
 }

@@ -8,8 +8,6 @@ use App\Field;
 use App\EmailValidator as EmailValidator;
 use App\Http\Resources\SubscriberResource;
 
-
-
 class SubscriberController extends Controller
 {
     /**
@@ -52,9 +50,11 @@ class SubscriberController extends Controller
             'email' => 'required|max:255', // unique:subscribers - will check later
             'name'  => 'nullable|max:255',
         ];
- 
-        
-        $data = $this->checkJSON($request, $rules);
+         
+        $response = $this->checkJSON($request, $rules);
+        if ($response) {
+            return $response;
+        }
         
         $email = $request->input('email');
     

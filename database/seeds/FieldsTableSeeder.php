@@ -32,6 +32,5 @@ class FieldsTableSeeder extends Seeder
             'type' => 'string',
             // no value
         ]);
-        
     }
 }

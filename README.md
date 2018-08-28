@@ -171,3 +171,19 @@ With host checking, but with MX checking turned off
 
 
 
+# PSR-2
+
+Some files in database folder break PSR-2 rule:
+
+  Each class must be in a namespace of at least one level (a top-level vendor name)
+
+This is due to laravel desing, see:
+
+https://stackoverflow.com/questions/41233837/why-laravel-migrations-class-doesnt-have-a-namespace
+
+"It's a design matter, basically. There are people out there using namespaced 
+migrations. But the way migrations are loaded and stored in the migration 
+database table, by the migrator, could be a problem to have them namespaced."
+
+
+

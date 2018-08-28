@@ -38,7 +38,5 @@ class SubscribersTableSeeder extends Seeder
             'state' => 'unconfirmed',
             'account_id' => 1
         ]);
-        
-        
     }
 }

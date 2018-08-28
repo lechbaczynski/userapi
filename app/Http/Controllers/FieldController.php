@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Field;
+use App\Subscriber;
 use App\Http\Resources\FieldResource;
+use Illuminate\Validation\Rule;
 
 class FieldController extends Controller
 {
@@ -18,7 +20,6 @@ class FieldController extends Controller
         return FieldResource::collection(Field::all());
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -30,23 +31,72 @@ class FieldController extends Controller
         // check if JSON correct
         
         $rules = [
-            'title' => 'required|max:255', // unique:subscribers - will check later
-            'type'  => 'required|max:255',
+            'title' => 'required|max:255',
+            'type' => [
+                'required',
+                'max:255',
+                Rule::in(Field::$allowedTypes),
+            ],
+            'value' => 'nullable|max:255',
+            'subscriber_email'  => 'required|max:255',
         ];
         
-        $data = $this->checkJSON($request, $rules);
-        
-
-        // validate
-        
-        
+        $response = $this->checkJSON($request, $rules);
+        if ($response) {
+            return $response;
+        }
+           
         // check if subscriber exists
+        $subscriberEmail = $request->input('subscriber_email');
+        $subscriber = null;
+        $subscriber = Subscriber::where('email', $subscriberEmail)->first();
+        if (!$subscriber) {
+            $httpStatus = 409;
+            $returnData = array(
+                'errors' => [
+                    ['status' => $httpStatus,
+                    'Title'     => 'E-mail does not exist',
+                    'detail' => 'E-mail does not exist']],
+            );
+            return response()->json($returnData, $httpStatus);
+        }
         
         // check if field exist?
+        $fieldTitle = $request->input('title');
+
+        $fields = $subscriber->fields;
+        
+        foreach ($fields as $field) {
+            if ($field->title == $fieldTitle) {
+                $httpStatus = 409;
+                $returnData = array(
+                    'errors' => [
+                    ['status' => $httpStatus,
+                    'Title'     => 'Field already exists',
+                    'detail' => 'Field already exists']],
+                );
+                return response()->json($returnData, $httpStatus);
+            }
+        }
+        
         
         // add field
+        $field = new Field([
+            'title' => $fieldTitle,
+            'type' => $request->input('type'),
+            'value' => $request->input('value'),
+        ]);
         
+        $subscriber->fields()->save($field);
         
+        $httpStatus = 201;
+        $returnData = array(
+            'created' => true,
+            'status' => $httpStatus,
+            'id' => $field->id
+        );
+               
+        return response()->json($returnData, $httpStatus);
     }
 
     /**

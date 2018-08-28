@@ -13,9 +13,11 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
-    protected function checkJSON(\Illuminate\Http\Request $request, array $rules) {
+    protected function checkJSON(\Illuminate\Http\Request $request, array $rules)
+    {
         $data =  $request->json()->all();
-
+        $response = null;
+            
         if (!$data) {
             // no payload or wrong payload
             $httpStatus = 422;
@@ -25,7 +27,7 @@ class Controller extends BaseController
                     'Title'     => 'Wrong data sent',
                     'detail' => 'The JSON sent is empty or incorrect']],
             );
-            return response()->json($returnData, $httpStatus);
+            $response = response()->json($returnData, $httpStatus);
         }
         
         $validator = Validator::make($data, $rules);
@@ -36,12 +38,11 @@ class Controller extends BaseController
                 'errors' => [
                     ['status' => $httpStatus,
                     'Title'     => 'Incorrect data sent',
-                    'detail' => 'The JOSN sent is incorrect']],
+                    'detail' => 'The JSON sent has incorrect format']],
             );
-            return response()->json($returnData, $httpStatus);
+            $response = response()->json($returnData, $httpStatus);
         }
-       
-        return $data;
+
+        return $response;
     }
-    
 }
