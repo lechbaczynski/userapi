@@ -14,21 +14,21 @@ class FieldsTableSeeder extends Seeder
         // user that have fields
         DB::table('fields')->insert([
             'subscriber_id' => 6,
-            'title' => "A number field one",
+            'title' => "A number field, first",
             'type' => 'number',
             'value' => 42
         ]);
         
         DB::table('fields')->insert([
             'subscriber_id' => 6,
-            'title' => "A string field one",
+            'title' => "A string field, first",
             'type' => 'string',
             'value' => 'foo'
         ]);
         
         DB::table('fields')->insert([
             'subscriber_id' => 6,
-            'title' => "A string field two - empty",
+            'title' => "A string field, second, empty",
             'type' => 'string',
             // no value
         ]);

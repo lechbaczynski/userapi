@@ -48,8 +48,6 @@ class SubscriberController extends Controller
             return response()->json($returnData, $httpStatus);
         }
         
-        
-        
         $rules = [
             'email' => 'required|max:255', // unique:subscribers - will check later
             'name'  => 'nullable|max:255',
@@ -58,7 +56,6 @@ class SubscriberController extends Controller
         $validator = Validator::make($data, $rules);
         if (!$validator->passes()) {
             // dd($validator->errors()->all());
-            
             $httpStatus = 422;
             $returnData = array(
                 'errors' => [
@@ -68,7 +65,6 @@ class SubscriberController extends Controller
             );
             return response()->json($returnData, $httpStatus);
         }
-    
 
         $email = $request->input('email');
     
@@ -82,10 +78,8 @@ class SubscriberController extends Controller
                     'Title'     => 'Wrong e-mail',
                     'detail' => 'E-mail must be valid and domain must be active']],
             );
-               
             return response()->json($returnData, $httpStatus);
         }
-   
 
         // check if not reactivating existing user
         $checkSubscribers = Subscriber::where('email', $email)->get();
@@ -101,11 +95,8 @@ class SubscriberController extends Controller
                
             return response()->json($returnData, $httpStatus);
         }
-        
-        
-        
-        
-           $fields = $request->input('fields');
+         
+        $fields = $request->input('fields');
         
         // check for fields
         if ($fields && is_array($fields)) {
@@ -150,7 +141,6 @@ class SubscriberController extends Controller
                     'Title'  => 'Problem with adding subscriber',
                     'detail' => 'Subscriber cannot be saved']],
             );
-               
             return response()->json($returnData, $httpStatus);
         }
 

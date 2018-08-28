@@ -18,9 +18,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// index and show used only for making it easier
+// for you to check how the app works.
+// Should be removed if we do not want to expose
+// subscribers' and fields' data
 
 Route::resource('subscribers', 'SubscriberController')->only([
-    'index', 'show', 'create', 'store', 'update'
+    'index', 'show', 'store', 'update'
 ]);
 
+
+Route::resource('fields', 'FieldController')->only([
+    'index', 'show', 'store', 'update'
+]);
 

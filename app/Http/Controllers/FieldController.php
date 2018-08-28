@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Field;
+use App\Http\Resources\FieldResource;
 
 class FieldController extends Controller
 {
@@ -13,7 +15,7 @@ class FieldController extends Controller
      */
     public function index()
     {
-        //
+        return FieldResource::collection(Field::all());
     }
 
 
@@ -36,7 +38,8 @@ class FieldController extends Controller
      */
     public function show($id)
     {
-        //
+        $field = Field::findOrFail($id);
+        return new FieldResource($field);
     }
 
     /**
