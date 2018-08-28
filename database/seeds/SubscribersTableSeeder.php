@@ -21,5 +21,24 @@ class SubscribersTableSeeder extends Seeder
                 'account_id' => 1
             ]);
         }
+        
+        // user with fields
+        DB::table('subscribers')->insert([
+            'email' => 'ihavefields@example.com',
+            'name' => "John H. Fields",
+            'state' => 'unconfirmed',
+            'account_id' => 1
+        ]);
+        
+        
+        // user for testing fields
+        DB::table('subscribers')->insert([
+            'email' => 'ilikefields@example.com',
+            'name' => "Ned Fields",
+            'state' => 'unconfirmed',
+            'account_id' => 1
+        ]);
+        
+        
     }
 }

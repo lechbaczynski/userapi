@@ -94,7 +94,7 @@ Run composer update
 
 ## Testing:
 
-Tests are in the Tests directory - Unit and Functiona tests.
+Tests are in the Tests directory - Unit and Feature tests.
 Running like:
 
 ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/

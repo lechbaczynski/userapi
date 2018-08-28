@@ -19,11 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('subscribers', 'SubscriberController@index');
-Route::get('subscribers/{id}', 'SubscriberController@show');
-Route::post('subscribers', 'SubscriberController@store');
-Route::put('subscribers/{id}', 'SubscriberController@update');
-Route::delete('subscribers/{id}', 'SubscriberController@delete');
-
+Route::resource('subscribers', 'SubscriberController')->only([
+    'index', 'show', 'create', 'store', 'update'
+]);
 
 

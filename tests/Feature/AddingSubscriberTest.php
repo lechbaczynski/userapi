@@ -116,8 +116,24 @@ class AddingSubscriberTest extends TestCase
             'email' => $email,
         ]);
         
+               
         // check if has fields
-        // TODO
+       
+        $subscriber = Subscriber::find($id);
+        $fields = $subscriber->fields->toArray();
+        
+        
+        $this->assertArraySubset(
+           [['title' => 'source', 
+             'type' => 'string', 
+             'value' => 'website', 
+             'subscriber_id' => $id 
+                ]],
+            $fields);
+        
+        // dd($fields);
+        
+        
     }
 
     public function testAddSubscriberWithManyFields()
@@ -153,6 +169,31 @@ class AddingSubscriberTest extends TestCase
         ]);
         
         // check if has fields
-        // TODO
+        
+        $subscriber = Subscriber::find($id);
+        $fields = $subscriber->fields->toArray();
+        
+        $counter = 0;
+        foreach ($fields as $field) {
+            if ($field['title'] == 'source') {
+                $this->assertEquals($field['type'], 'string'); 
+                $this->assertEquals($field['value'], 'website'); 
+                $counter++;
+            }
+            else if ($field['title'] == 'age') {
+                $this->assertEquals($field['type'], 'number'); 
+                $this->assertEquals($field['value'], 20); 
+                $counter++;
+            }
+            else if ($field['title'] == 'sex') {
+                $this->assertEquals($field['type'], 'string'); 
+                $this->assertEquals($field['value'], null); 
+                $counter++;
+            }
+            
+        }
+        
+         $this->assertEquals($counter, 3); 
+        
     }
 }
