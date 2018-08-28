@@ -105,6 +105,10 @@ Run it like:
 
 ## Testing API - subscribers
 
+### Creating
+
+You can create subscriber *with or without fields* in one request:
+
 You can send JSON payload in POST to API address, for example:
 
     http://host:port/api/subscribers/
@@ -141,6 +145,9 @@ It should return response like:
 
 Where id is an id of newly created subscriber.
 
+
+### Showing
+
 You can see subcribers list (JSON, modified throgh Resource layer) at:
 
 All:
@@ -172,7 +179,32 @@ With syntax and host checking functions, but with MX checking turned off.
 MX checking generated false negatives, for example for gmail.com
 
 
+### Updating
+
+
+You can send JSON payload in PUT to API address, for example:
+
+    http://host:port/api/subscribers/1
+
+example:
+
+    {
+	"name": "Johny1",
+	"state": "junk"
+    }
+
+or
+    {
+       "name": "Johny1"
+    }
+
+
+You *cannot change e-mail address*, this would be bad idea.
+
+
 ## Testing API - fields
+
+### Creating
 
 You can POST raw JSON like:
 
@@ -189,6 +221,32 @@ to
 It should return JSON like:
 
     {"created":true,"status":201,"id":9}
+
+
+### Updating
+
+You can PUT JSON like:
+
+    {
+        "title": "Yet another field",
+        "type": "string",
+        "value": "foobar"
+    }
+
+
+to 
+
+  http://localhost:8000/api/fields/1
+
+It should return JSON like:
+
+    {"updated":true,"status":200,"id":1}
+
+When updating a field that does not exists, like 
+
+    http://localhost:8000/api/fields/1
+
+It returns 404
 
 
 

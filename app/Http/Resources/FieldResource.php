@@ -15,8 +15,9 @@ class FieldResource extends JsonResource
     public function toArray($request)
     {
         $data = [
-            'title' => $this->title,
-            'type' => $this->type,
+            'subscriber_id' => $this->subscriber_id,
+            'title'         => $this->title,
+            'type'          => $this->type,
         ];
         
         if ($this->value !== null) {

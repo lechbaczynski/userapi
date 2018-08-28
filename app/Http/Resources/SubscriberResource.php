@@ -21,6 +21,7 @@ class SubscriberResource extends JsonResource
         return [
             'name' => $this->name,
             'email' => $this->email,
+            'state' => $this->state,
             'fields' => FieldResource::collection($this->fields),
         ];
     }

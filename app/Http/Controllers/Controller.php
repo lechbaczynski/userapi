@@ -32,7 +32,7 @@ class Controller extends BaseController
         
         $validator = Validator::make($data, $rules);
         if (!$validator->passes()) {
-            // dd($validator->errors()->all());
+            //dd($validator->errors()->all());
             $httpStatus = 422;
             $returnData = array(
                 'errors' => [

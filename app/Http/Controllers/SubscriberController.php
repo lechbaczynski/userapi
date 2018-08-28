@@ -163,6 +163,7 @@ class SubscriberController extends Controller
         $rules = [
             'name' => 'nullable|max:255',
             'state' => [
+                'nullable',
                 Rule::in(Subscriber::ALLOWEDSTATES),
             ],
             // no e-mail - one should not be able to chane an e-mail of a subscriber
@@ -191,9 +192,13 @@ class SubscriberController extends Controller
                 return response()->json($returnData, $httpStatus);
         }
 
-        $subscriber->name   = $request->input('name');
-        $subscriber->state  = $request->input('state');
-        
+        if ($request->input('name')) {
+            $subscriber->name = $request->input('name');
+        }
+        if ($request->input('state')) {
+            $subscriber->state = $request->input('state');
+        }
+                
         $subscriber->save();
         
         $httpStatus = 200;
