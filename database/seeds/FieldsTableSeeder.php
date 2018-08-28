@@ -11,7 +11,7 @@ class FieldsTableSeeder extends Seeder
      */
     public function run()
     {
-        // user that have fields
+        // fields for subscriber that have fields
         DB::table('fields')->insert([
             'subscriber_id' => 6,
             'title' => "A number field, first",

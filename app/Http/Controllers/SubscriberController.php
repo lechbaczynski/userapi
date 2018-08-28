@@ -8,7 +8,7 @@ use App\Field;
 use App\EmailValidator as EmailValidator;
 use App\Http\Resources\SubscriberResource;
 
-use Validator;
+
 
 class SubscriberController extends Controller
 {
@@ -34,38 +34,28 @@ class SubscriberController extends Controller
      */
     public function store(Request $request)
     {
-        $data =  $request->json()->all();
-
-        if (!$data) {
-            // no payload or wrong payload
-            $httpStatus = 422;
-            $returnData = array(
-                'errors' => [
-                    ['status' => $httpStatus,
-                    'Title'     => 'Wrong data sent',
-                    'detail' => 'The JOSN sent is empty or incorrect']],
-            );
-            return response()->json($returnData, $httpStatus);
-        }
-        
+//        $data =  $request->json()->all();
+//
+//        if (!$data) {
+//            // no payload or wrong payload
+//            $httpStatus = 422;
+//            $returnData = array(
+//                'errors' => [
+//                    ['status' => $httpStatus,
+//                    'Title'     => 'Wrong data sent',
+//                    'detail' => 'The JSON sent is empty or incorrect']],
+//            );
+//            return response()->json($returnData, $httpStatus);
+//        }
+ 
         $rules = [
             'email' => 'required|max:255', // unique:subscribers - will check later
             'name'  => 'nullable|max:255',
         ];
+ 
         
-        $validator = Validator::make($data, $rules);
-        if (!$validator->passes()) {
-            // dd($validator->errors()->all());
-            $httpStatus = 422;
-            $returnData = array(
-                'errors' => [
-                    ['status' => $httpStatus,
-                    'Title'     => 'Incorrect data sent',
-                    'detail' => 'The JOSN sent is incorrect']],
-            );
-            return response()->json($returnData, $httpStatus);
-        }
-
+        $data = $this->checkJSON($request, $rules);
+        
         $email = $request->input('email');
     
         // validate e-mail

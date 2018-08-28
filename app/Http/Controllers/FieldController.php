@@ -27,7 +27,26 @@ class FieldController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // check if JSON correct
+        
+        $rules = [
+            'title' => 'required|max:255', // unique:subscribers - will check later
+            'type'  => 'required|max:255',
+        ];
+        
+        $data = $this->checkJSON($request, $rules);
+        
+
+        // validate
+        
+        
+        // check if subscriber exists
+        
+        // check if field exist?
+        
+        // add field
+        
+        
     }
 
     /**
