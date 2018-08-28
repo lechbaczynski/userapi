@@ -254,7 +254,7 @@ It should return JSON like:
 
 When updating a field that does not exists, like 
 
-    http://localhost:8000/api/fields/1
+    http://localhost:8000/api/fields/1007
 
 It returns 404
 
