@@ -18,6 +18,19 @@ I used Homestead virtual machine, set up with vagrant
 
 Use PHP version 7+
 
+## Composer
+
+There is a library added for validating e-mail in composer.json
+
+Run 
+
+  composer install
+  
+and
+  
+  composer update
+
+
 ## Database
 
 I have chosen the SQLite driver, to not make you set up the MySQL database, 
@@ -99,11 +112,6 @@ php artisan migrate
 php artisan db:seed
 
 
-## Composer
-
-There is a library added for validating e-mail in composer.json
-
-Run composer update
 
 
 ## Testing:
