@@ -1,15 +1,27 @@
-# Seting up and running
+# REST API for adding Subscribers and their Fields 
 
-It is standard Laravel app, install it like any other Laravel app. 
-I used Homestad virtual machine, set up with vagrant 
+Adding subscribers and fields to the database via REST JSON API. 
+Each subscriber can have many fields.
+
+Uses Laravel 5.6 framework, and it's features: migrations, seeders, tests (unit tests and feature tests), 
+request validations, Eloquent ORM and its model relations. 
+
+The code is (mostly) PSR-2 compliant (see below).
+
+
+
+# Setting up and running
+
+It is a standard Laravel app, install it like any other Laravel app. 
+I used Homestead virtual machine, set up with vagrant 
 ( https://laravel.com/docs/5.6/homestead )
 
-Use php version 7+
+Use PHP version 7+
 
 ## Database
 
-I have chosen sqlite driver, to not make you set up the mysql database, 
-but of course it can be changed to mysql in config/database.php file.
+I have chosen the SQLite driver, to not make you set up the MySQL database, 
+but of course, it can be changed to MySQL in the config/database.php file.
 
 
 To set up the database:
@@ -45,7 +57,7 @@ and set up it in config/database.php like for example:
         ],
 ```
 
-or (easier version) use sqlite in memory for both testing and dev:
+or (easier version) use SQLite in memory for both testing and dev:
 
 ```
         'sqlite' => [
@@ -60,7 +72,7 @@ or (easier version) use sqlite in memory for both testing and dev:
         ],
 ```
 
-Testing enviroment already uses in-memory sqlite database, for speed and convenience.
+Testing environment already uses in-memory SQLite database, for speed and convenience.
 
 
 Add:
@@ -143,12 +155,12 @@ It should return response like:
 
     {"created":true,"status":201,"id":8}
 
-Where id is an id of newly created subscriber.
+Where id is an id of the newly created subscriber.
 
 
 ### Showing
 
-You can see subcribers list (JSON, modified throgh Resource layer) at:
+You can see subscribers list (JSON, modified through Resource layer) at:
 
 All:
 
@@ -158,7 +170,7 @@ One:
 
     http://localhost:8000/api/subscribers/6 
 
-(after initial seeding, subcriber number 6 should have a few fields)
+(after initial seeding, subscriber number 6 should have a few fields)
 
 
 These index and show functions are used only for making it easier 
@@ -190,8 +202,8 @@ example:
 
 ```json
     {
-	"name": "Johny1",
-	"state": "junk"
+    "name": "Johny1",
+    "state": "junk"
     }
 ````
 
@@ -203,7 +215,7 @@ or
     }
 ```
 
-You *cannot change e-mail address*, this would be bad idea.
+You *cannot change e-mail address*, this would be a bad idea.
 
 
 ## Testing API - fields
@@ -270,8 +282,7 @@ This is due to Laravel design, see:
 
 https://stackoverflow.com/questions/41233837/why-laravel-migrations-class-doesnt-have-a-namespace
 
-"It's a design matter, basically. There are people out there using namespaced 
-migrations. But the way migrations are loaded and stored in the migration 
+"It's a design matter, basically. There are people out there using namespaced migrations. But the way migrations are loaded and stored in the migration 
 database table, by the migrator, could be a problem to have them namespaced."
 
 
