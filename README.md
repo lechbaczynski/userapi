@@ -26,9 +26,10 @@ Run
 
   composer install
   
-and
+and, if you want:
   
   composer update
+
 
 
 ## Database
@@ -111,6 +112,12 @@ php artisan migrate
 
 php artisan db:seed
 
+
+If db:seed does not work, do:
+
+    composer dump-autoload
+
+and try again.
 
 
 
