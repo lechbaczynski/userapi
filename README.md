@@ -172,6 +172,11 @@ It should return response like:
 
 Where id is an id of the newly created subscriber.
 
+Remember to set JSON format (example for Postman below)
+
+
+
+
 
 ### Showing
 
