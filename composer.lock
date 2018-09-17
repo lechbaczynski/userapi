@@ -4,8 +4,56 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5bca48e56bbf3a25645858fcab9c285",
+    "content-hash": "483910e13a2f954e5c17d7ceefe01ef6",
     "packages": [
+        {
+            "name": "daveearley/daves-email-validation-tool",
+            "version": "v0.1.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/daveearley/Email-Validation-Tool.git",
+                "reference": "c9e8a340638cbabe05962fe1b2ea7ef79e1a529f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/daveearley/Email-Validation-Tool/zipball/c9e8a340638cbabe05962fe1b2ea7ef79e1a529f",
+                "reference": "c9e8a340638cbabe05962fe1b2ea7ef79e1a529f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.9",
+                "phpunit/phpunit": "^6.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EmailValidation\\": "src/",
+                    "EmailValidation\\Tests\\": "src/tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Earley",
+                    "email": "dave@earley.email"
+                }
+            ],
+            "description": "An easy to use, accurate-ish & extensible email validation library for PHP 7+",
+            "keywords": [
+                "disposable email check",
+                "email",
+                "email validation",
+                "email verification",
+                "validate email"
+            ],
+            "time": "2018-04-13T00:48:04+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
@@ -920,6 +968,95 @@
                 "php"
             ],
             "time": "2018-07-15T17:25:16+00:00"
+        },
+        {
+            "name": "nojacko/email-data-disposable",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nojacko/email-data-disposable.git",
+                "reference": "f78f2d81902e4043b96f2bdcceeac7eb2a004165"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nojacko/email-data-disposable/zipball/f78f2d81902e4043b96f2bdcceeac7eb2a004165",
+                "reference": "f78f2d81902e4043b96f2bdcceeac7eb2a004165",
+                "shasum": ""
+            },
+            "require-dev": {
+                "ext-intl": "*",
+                "league/climate": "^3.2",
+                "php-curl-class/php-curl-class": "~2.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EmailData\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Jackson",
+                    "email": "git@nojacko.com"
+                }
+            ],
+            "description": "Disposable email domains",
+            "time": "2017-07-12T10:55:04+00:00"
+        },
+        {
+            "name": "nojacko/email-validator",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nojacko/email-validator.git",
+                "reference": "fbd98fdcf373ddbe09843c3ad5a7db9bc3651c3b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nojacko/email-validator/zipball/fbd98fdcf373ddbe09843c3ad5a7db9bc3651c3b",
+                "reference": "fbd98fdcf373ddbe09843c3ad5a7db9bc3651c3b",
+                "shasum": ""
+            },
+            "require": {
+                "nojacko/email-data-disposable": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EmailValidator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Jackson",
+                    "email": "nojacko@gmail.com",
+                    "homepage": "http://jamesdavidjackson.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Small PHP library to valid email addresses using a number of methods.",
+            "keywords": [
+                "MX",
+                "check",
+                "checker",
+                "disposable",
+                "email",
+                "email address",
+                "library",
+                "role",
+                "throwaway",
+                "validater",
+                "validation"
+            ],
+            "time": "2016-08-09T11:04:18+00:00"
         },
         {
             "name": "paragonie/random_compat",
